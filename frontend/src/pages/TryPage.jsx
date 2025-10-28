@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { Link } from 'react-router-dom';
 import InputForm from '../components/InputForm';
-
+import logo from '../assets/logo/logo.png';
 const TryPage = () => {
    const [activeTab, setActiveTab] = useState('input');
 
@@ -13,6 +13,7 @@ const TryPage = () => {
           {/* Logo */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
+               <img src={logo} alt="logo" className="h-8 w-8 mr-2 mb-1" /> 
               <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">NovelAI</span>
             </Link>
           </div>

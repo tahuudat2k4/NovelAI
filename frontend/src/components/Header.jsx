@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link} from 'react-router-dom';
+import logo from '../assets/logo/logo.png';
 
 const Header = () => {
   const scrollToSection = (sectionId) => {
@@ -15,6 +16,7 @@ const Header = () => {
           {/* Logo */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
+              <img src={logo} alt="logo" className="h-8 w-8 mr-2 mb-1" />
               <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">NovelAI</span>
             </Link>
           </div>
