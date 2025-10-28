@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import { Link } from 'react-router-dom';
+import InputForm from '../components/InputForm';
 
 const TryPage = () => {
    const [activeTab, setActiveTab] = useState('input');
@@ -99,6 +100,7 @@ const TryPage = () => {
           {activeTab === 'input' && (
             <div className="text-white">
               {/* Input content will go here */}
+              <InputForm/>
             </div>
           )}
           {activeTab === 'storage' && (

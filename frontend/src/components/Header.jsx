@@ -21,13 +21,13 @@ const Header = () => {
 
           {/* Navigation Menu */}
           <nav className="hidden md:flex space-x-18">
-             <button onClick={()=>{scrollToSection('home')}} className="text-white hover:text-purple-400 px-4 py-2 rounded-md text-base font-medium tracking-wide">
+             <button onClick={()=>{scrollToSection('home')}} className="cursor-pointer text-white hover:text-purple-400 px-4 py-2 rounded-md text-base font-medium tracking-wide">
               Home
             </button>
-            <button onClick={()=>{scrollToSection('about')}} className="text-white hover:text-purple-400 px-4 py-2 rounded-md text-base font-medium tracking-wide">
+            <button onClick={()=>{scrollToSection('about')}} className="cursor-pointer text-white hover:text-purple-400 px-4 py-2 rounded-md text-base font-medium tracking-wide">
               About
             </button>
-            <button onClick={()=>{scrollToSection('contact')}} className="text-white hover:text-purple-400 px-4 py-2 rounded-md text-base font-medium tracking-wide">
+            <button onClick={()=>{scrollToSection('contact')}} className="cursor-pointer text-white hover:text-purple-400 px-4 py-2 rounded-md text-base font-medium tracking-wide">
               Contact
             </button>
           </nav>
@@ -49,7 +49,7 @@ const Header = () => {
               </svg>
             </a>
             <Link to="/try" 
-            className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700">
+            className="cursor-pointer bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700">
               Get Started
             </Link>
           </div>
