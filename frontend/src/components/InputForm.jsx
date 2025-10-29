@@ -45,7 +45,7 @@ const InputForm = () => {
 
   return (
     <>
-      <div className="p-6 bg-slate-800 rounded-lg shadow-md">
+      <div className="m-7 p-9 bg-slate-900/50 rounded-lg shadow-md border border-purple-500/20">
         <form onSubmit={ handleSubmit }>
           <div className="flex flex-wrap gap-4 mb-4">
             {/* Thể loại */ }

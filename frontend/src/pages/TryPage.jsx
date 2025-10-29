@@ -2,11 +2,12 @@ import React, {useState} from 'react'
 import { Link } from 'react-router-dom';
 import InputForm from '../components/InputForm';
 import logo from '../assets/logo/logo.png';
+import Storage from '../components/Storage';
 const TryPage = () => {
    const [activeTab, setActiveTab] = useState('input');
 
   return (
-      <div className="min-h-screen bg-slate-950">
+      <div className="min-h-full bg-slate-950">
     <header className="fixed top-0 w-full bg-slate-900/50 border-b border-purple-500/20 shadow-lg z-50 backdrop-blur-sm">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
@@ -97,16 +98,17 @@ const TryPage = () => {
         </div>
 
         {/* Main Content Area */}
-        <div className="h-screen ml-64 flex-1 p-8 pt-24 bg-gradient-to-l from-purple-950/50 to-slate-950 " >
+        <div className="h-full ml-64 flex-1 p-8 pt-20 bg-gradient-to-l from-purple-950/50 to-slate-950 " >
           {activeTab === 'input' && (
-            <div className="text-white">
+            <div className="text-white w-full h-screen">
               {/* Input content will go here */}
               <InputForm/>
             </div>
           )}
           {activeTab === 'storage' && (
-            <div className="text-white">
+            <div className="text-white  w-full h-screen">
               {/* Storage content will go here */}
+              <Storage/>
             </div>
           )}
         </div>
