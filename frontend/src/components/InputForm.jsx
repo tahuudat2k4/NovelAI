@@ -42,6 +42,20 @@ const InputForm = () => {
       setLoading(false);
     }
   }
+  // xử lý tạo lại truyện
+  const handleRegenerate = async () => {
+  setLoading(true);
+  setStory("");
+  try {
+    const result = await createStory(formData);
+    setStory(result.story || result);
+  } catch (err) {
+    console.error("Lỗi khi tạo lại truyện:", err);
+    setStory("⚠️ Có lỗi xảy ra khi tạo lại truyện. Vui lòng thử lại!");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <>
@@ -54,6 +68,7 @@ const InputForm = () => {
               <select
                 id="genre"
                 name="genre"
+                required
                 value={ formData.genre }
                 onChange={ handleChange }
                 className="w-full px-3 py-2 bg-gray-700 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
@@ -71,6 +86,7 @@ const InputForm = () => {
               <select
                 id="length"
                 name="length"
+                required
                 value={ formData.length }
                 onChange={ handleChange }
                 className="w-full px-3 py-2 bg-gray-700 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
@@ -89,6 +105,7 @@ const InputForm = () => {
                 type="text"
                 id="setting"
                 name="setting"
+                required
                 value={ formData.setting }
                 onChange={ handleChange }
                 className="w-full px-3 py-2 bg-gray-700 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
@@ -105,6 +122,7 @@ const InputForm = () => {
                 type="text"
                 id="characters"
                 name="characters"
+                required
                 value={ formData.characters }
                 onChange={ handleChange }
                 className="w-full px-3 py-2 bg-gray-700 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
@@ -119,6 +137,7 @@ const InputForm = () => {
             <textarea
               id="description"
               name="description"
+              required
               value={ formData.description }
               onChange={ handleChange }
               className="w-full px-3 py-2 bg-gray-700 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
@@ -135,14 +154,26 @@ const InputForm = () => {
             { loading ? "Đang tạo truyện..." : "Generate Story" }
           </button>
         </form>
-        {/* Kết quả */ }
+      </div>
+       {/* Kết quả */ }
         { story && (
-          <div className="mt-6 p-4 bg-gray-900 text-white rounded-md whitespace-pre-line">
+          <div className="m-7 p-10 bg-gray-900 text-white rounded-md whitespace-pre-line border border-green-500/20">
             <h3 className="text-xl font-bold mb-2 text-purple-400">📖 Câu chuyện của bạn:</h3>
             <p>{ story }</p>
+            <div className="flex mt-9">
+              <button type='submit'
+              className="cursor-pointer mr-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-md hover:from-purple-700 hover:to-pink-700 transition-colors duration-200"
+              >Lưu truyện</button>
+              <button type='submit'
+              className="cursor-pointer mr-4 bg-gradient-to-r from-green-800 to-green-600 text-white px-4 py-2 rounded-md hover:from-green-900 hover:to-green-700 transition-colors duration-200"
+              >Tạo ảnh từ truyện</button>
+              <button type='submit'
+              onClick={handleRegenerate}
+              className="cursor-pointer bg-gradient-to-r from-red-800 to-red-600 text-white px-4 py-2 rounded-md hover:from-red-900 hover:to-red-700 transition-colors duration-200"
+              > { loading ? "Đang tạo lại truyện..." : "Tạo lại truyện" }</button>
+            </div>
           </div>
         ) }
-      </div>
     </>
   )
 }

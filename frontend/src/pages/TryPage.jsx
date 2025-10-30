@@ -100,13 +100,13 @@ const TryPage = () => {
         {/* Main Content Area */}
         <div className="h-full ml-64 flex-1 p-8 pt-20 bg-gradient-to-l from-purple-950/50 to-slate-950 " >
           {activeTab === 'input' && (
-            <div className="text-white w-full h-screen">
+            <div className="text-white w-full min-h-screen ">
               {/* Input content will go here */}
               <InputForm/>
             </div>
           )}
           {activeTab === 'storage' && (
-            <div className="text-white  w-full h-screen">
+            <div className="text-white  w-full min-h-screen ">
               {/* Storage content will go here */}
               <Storage/>
             </div>
