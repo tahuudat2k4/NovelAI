@@ -1,22 +1,24 @@
-const { GoogleGenerativeAI } = require('@google/generative-ai');
+import { GoogleGenAI } from '@google/genai';
+
 
 // Initialize Gemini AI
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const genAI = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY || "AIzaSyDmxx7Pd2gGDB7tbXt7EA-OWdcvPvcAeBM",
+});
+
 
 // Generate story using Gemini AI
 const generateStory = async ({ genre, length, setting, characters, description }) => {
   try {
-    // Get the generative model
-    const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
-
-    // Build the prompt
+    // Build prompt
     const prompt = buildPrompt({ genre, length, setting, characters, description });
-
-    // Generate content
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const story = response.text();
-
+    // Call Gemini AI to generate story
+    const response = await genAI.models.generateContent({
+      model: 'gemini-2.0-flash',
+      contents: prompt,
+    });
+     // Lấy text từ kết quả trả về
+     const story = response.text?.trim()|| "Không thể tạo truyện, thử lại sau.";
     return story;
   } catch (error) {
     console.error('Gemini API Error:', error);
@@ -50,6 +52,6 @@ const buildPrompt = ({ genre, length, setting, characters, description }) => {
   return prompt;
 };
 
-module.exports = {
+export default {
   generateStory
 };

@@ -1,4 +1,4 @@
-const geminiService = require('../services/geminiService');
+const geminiService = require('../services/geminiService').default;
 const storageService = require('../services/storageService');
 
 // Generate a new story using Gemini AI
