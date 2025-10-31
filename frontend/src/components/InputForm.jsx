@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { createStory } from '../services/storyServices';
+import ExportStoryPDF from './ExportStoryPDF';
 
 const InputForm = () => {
   const GENRES = ["Kinh dị", "Lãng mạn", "Viễn tưởng", "Hài", "Trinh thám", "Cổ trang", "Khoa học viễn tưởng", "Kỳ ảo"];
@@ -161,16 +162,20 @@ const InputForm = () => {
             <h3 className="text-xl font-bold mb-2 text-purple-400">📖 Câu chuyện của bạn:</h3>
             <p>{ story }</p>
             <div className="flex mt-9">
+              {/* Lưu truyện */ }
               <button type='submit'
-              className="cursor-pointer mr-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-md hover:from-purple-700 hover:to-pink-700 transition-colors duration-200"
-              >Lưu truyện</button>
+              className="flex cursor-pointer mr-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-md hover:from-purple-700 hover:to-pink-700 transition-colors duration-200"
+              >💾 Lưu truyện</button>
+              {/* Tạo ảnh từ truyện */ }
               <button type='submit'
               className="cursor-pointer mr-4 bg-gradient-to-r from-green-800 to-green-600 text-white px-4 py-2 rounded-md hover:from-green-900 hover:to-green-700 transition-colors duration-200"
-              >Tạo ảnh từ truyện</button>
+              >📸 Tạo ảnh từ truyện</button>
+              {/* Xuất PDF */ }
+              <ExportStoryPDF story={story} />
               <button type='submit'
               onClick={handleRegenerate}
               className="cursor-pointer bg-gradient-to-r from-red-800 to-red-600 text-white px-4 py-2 rounded-md hover:from-red-900 hover:to-red-700 transition-colors duration-200"
-              > { loading ? "Đang tạo lại truyện..." : "Tạo lại truyện" }</button>
+              > { loading ? "Đang tạo lại truyện..." : "🔁 Tạo lại truyện" }</button>
             </div>
           </div>
         ) }
