@@ -82,21 +82,10 @@ const deleteStory = async (id) => {
   }
 };
 
-// Clear all stories (for testing)
-const clearAllStories = async () => {
-  try {
-    await Story.deleteMany({});
-    return true;
-  } catch (error) {
-    console.error('Error clearing all stories:', error);
-    throw new Error('Failed to clear all stories');
-  }
-};
-
 module.exports = {
   saveStory,
   getAllStories,
   getStoryById,
   deleteStory,
-  clearAllStories
+  
 };

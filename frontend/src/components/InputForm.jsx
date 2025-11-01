@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createStory } from '../services/storyServices';
+import { createStory, saveStory } from '../services/storyServices';
 import ExportStoryPDF from './ExportStoryPDF';
 
 const InputForm = () => {
@@ -57,6 +57,26 @@ const InputForm = () => {
     setLoading(false);
   }
 };
+  // Xử lý lưu truyện 
+  const handleSaveStory = async () => {
+    if(!story) return;
+    // Logic để lưu truyện vào database
+    try {
+       const storyData = {
+      title: formData.description.slice(0, 30) + "...", // ví dụ đặt tiêu đề tự động
+      genre: formData.genre,
+      length: formData.length + " từ",
+      content: story,
+    };
+    // Goi API lưu truyện
+    const result = await saveStory(storyData);
+    alert("✅ Lưu truyện thành công!");
+    console.log(result);
+    }catch (err) {
+      console.error("Lỗi khi lưu truyện:", err);
+      alert("⚠️ Có lỗi xảy ra khi lưu truyện. Vui lòng thử lại!");
+    }
+  }
 
   return (
     <>
@@ -163,7 +183,7 @@ const InputForm = () => {
             <p>{ story }</p>
             <div className="flex mt-9">
               {/* Lưu truyện */ }
-              <button type='submit'
+              <button type='submit' onClick={handleSaveStory}
               className="flex cursor-pointer mr-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-md hover:from-purple-700 hover:to-pink-700 transition-colors duration-200"
               >💾 Lưu truyện</button>
               {/* Tạo ảnh từ truyện */ }

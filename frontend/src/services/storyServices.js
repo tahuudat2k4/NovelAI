@@ -39,3 +39,13 @@ export const getSavedStories = async () => {
     throw error;
   }
 };
+// Xoá truyện đã lưu theo ID
+export const deleteStoryById = async (id) => {
+  try {
+    const response = await api.delete(`/stories/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Lỗi khi xóa truyện:", error);
+    throw error;
+  }
+};

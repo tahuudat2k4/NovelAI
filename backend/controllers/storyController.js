@@ -70,7 +70,11 @@ const saveStory = async (req, res, next) => {
 // Get all saved stories
 const getSavedStories = async (req, res, next) => {
   try {
-    const stories = storageService.getAllStories();
+    let stories = await storageService.getAllStories();
+    // nếu không phải array thì convert
+    if(!Array.isArray(stories)){
+      stories = Object.values(stories || {});
+    }
     res.status(200).json({
       success: true,
       stories: stories
@@ -85,7 +89,7 @@ const getSavedStories = async (req, res, next) => {
 const deleteStory = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const deleted = storageService.deleteStory(id);
+    const deleted = await storageService.deleteStory(id);
 
     if (!deleted) {
       return res.status(404).json({
