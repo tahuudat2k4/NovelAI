@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { createStory, saveStory } from '../services/storyServices';
 import ExportStoryPDF from './ExportStoryPDF';
+import { ChevronDown } from 'lucide-react';
 
-const InputForm = () => {
+
+
+const InputForm = ({ setSelectedOption, setStory, story }) => {
+
   const GENRES = ["Kinh dị", "Lãng mạn", "Viễn tưởng", "Hài", "Trinh thám", "Cổ trang", "Khoa học viễn tưởng", "Kỳ ảo"];
   const LENGTHS = [
     { value: "500", label: "500 từ" },
@@ -16,7 +20,6 @@ const InputForm = () => {
     characters: '',
     description: '',
   });
-  const [story, setStory] = useState(""); //nơi chứa truyện nhận từ backend
   const [loading, setLoading] = useState(false);
   // Xử lý thay đổi input 
   const handleChange = (e) => {
@@ -45,39 +48,40 @@ const InputForm = () => {
   }
   // xử lý tạo lại truyện
   const handleRegenerate = async () => {
-  setLoading(true);
-  setStory("");
-  try {
-    const result = await createStory(formData);
-    setStory(result.story || result);
-  } catch (err) {
-    console.error("Lỗi khi tạo lại truyện:", err);
-    setStory("⚠️ Có lỗi xảy ra khi tạo lại truyện. Vui lòng thử lại!");
-  } finally {
-    setLoading(false);
-  }
-};
+    setLoading(true);
+    setStory("");
+    try {
+      const result = await createStory(formData);
+      setStory(result.story || result);
+    } catch (err) {
+      console.error("Lỗi khi tạo lại truyện:", err);
+      setStory("⚠️ Có lỗi xảy ra khi tạo lại truyện. Vui lòng thử lại!");
+    } finally {
+      setLoading(false);
+    }
+  };
   // Xử lý lưu truyện 
   const handleSaveStory = async () => {
-    if(!story) return;
+    if (!story) return;
     // Logic để lưu truyện vào database
     try {
-       const storyData = {
-      title: formData.description.slice(0, 30) + "...", // ví dụ đặt tiêu đề tự động
-      genre: formData.genre,
-      length: formData.length + " từ",
-      content: story,
-    };
-    // Goi API lưu truyện
-    const result = await saveStory(storyData);
-    alert("✅ Lưu truyện thành công!");
-    console.log(result);
-    }catch (err) {
+      const storyData = {
+        title: formData.description.slice(0, 30) + "...", // ví dụ đặt tiêu đề tự động
+        genre: formData.genre,
+        length: formData.length + " từ",
+        content: story,
+      };
+      // Goi API lưu truyện
+      const result = await saveStory(storyData);
+      alert("✅ Lưu truyện thành công!");
+      console.log(result);
+    } catch (err) {
       console.error("Lỗi khi lưu truyện:", err);
       alert("⚠️ Có lỗi xảy ra khi lưu truyện. Vui lòng thử lại!");
     }
   }
-
+  // Trạng thái của mở rộng
+  const [open, setOpen] = useState(false);
   return (
     <>
       <div className="m-7 p-9 bg-slate-900/50 rounded-lg shadow-md border border-purple-500/20">
@@ -176,29 +180,55 @@ const InputForm = () => {
           </button>
         </form>
       </div>
-       {/* Kết quả */ }
-        { story && (
-          <div className="m-7 p-10 bg-gray-900 text-white rounded-md whitespace-pre-line border border-green-500/20">
-            <h3 className="text-xl font-bold mb-2 text-purple-400">📖 Câu chuyện của bạn:</h3>
-            <p>{ story }</p>
-            <div className="flex mt-9">
-              {/* Lưu truyện */ }
-              <button type='submit' onClick={handleSaveStory}
+      {/* Kết quả */ }
+      { story && (
+        <div className="m-7 p-10 bg-gray-900 text-white rounded-md whitespace-pre-line border border-green-500/20">
+          <h3 className="text-xl font-bold mb-2 text-purple-400">📖 Câu chuyện của bạn:</h3>
+          <p>{ story }</p>
+          <div className="flex mt-9">
+            {/* Lưu truyện */ }
+            <button type='submit' onClick={ handleSaveStory }
               className="flex cursor-pointer mr-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-md hover:from-purple-700 hover:to-pink-700 transition-colors duration-200"
-              >💾 Lưu truyện</button>
-              {/* Tạo ảnh từ truyện */ }
-              <button type='submit'
-              className="cursor-pointer mr-4 bg-gradient-to-r from-green-800 to-green-600 text-white px-4 py-2 rounded-md hover:from-green-900 hover:to-green-700 transition-colors duration-200"
-              >📸 Tạo ảnh từ truyện</button>
-              {/* Xuất PDF */ }
-              <ExportStoryPDF story={story} />
-              <button type='submit'
-              onClick={handleRegenerate}
+            >💾 Lưu truyện</button>
+            {/* Mở rộng (tạo ảnh, tạo audio, tạo video) */ }
+            <button
+              onClick={ () => setOpen(!open) }
+              className="cursor-pointer bg-gradient-to-r from-green-700 to-green-600 text-white px-4 py-2 rounded-lg 
+      hover:from-green-800 hover:to-green-700 flex items-center gap-2 shadow-md mr-4"
+            >
+              🌿 Mở rộng <ChevronDown className="w-4 h-4 pt-1" />
+            </button>
+
+            { open && (
+              <div className="absolute  left-92 mt-13 w-105  bg-slate-800 border border-slate-700 rounded-lg shadow-lg overflow-hidden flex flex-row">
+                <button onClick={ () => {
+                  setSelectedOption("image");
+                  setOpen(false);
+                } }
+                  className="w-35 px-5 py-2 hover:bg-slate-700 cursor-pointer text-base">🖼️ Tạo ảnh </button>
+                <button
+                  onClick={ () => {
+                  setSelectedOption("audio");
+                  setOpen(false);
+                } }
+                  className="w-35 px-5 py-2 hover:bg-slate-700 cursor-pointer text-base">🎧 Tạo audio </button>
+                <button
+                  onClick={ () => {
+                  setSelectedOption("video");
+                  setOpen(false);
+                } }
+                  className="w-35 px-5 py-2 hover:bg-slate-700 cursor-pointer text-base">🎬 Tạo video</button>
+              </div>
+            ) }
+            {/* Xuất PDF */ }
+            <ExportStoryPDF story={ story } />
+            <button type='submit'
+              onClick={ handleRegenerate }
               className="cursor-pointer bg-gradient-to-r from-red-800 to-red-600 text-white px-4 py-2 rounded-md hover:from-red-900 hover:to-red-700 transition-colors duration-200"
-              > { loading ? "Đang tạo lại truyện..." : "🔁 Tạo lại truyện" }</button>
-            </div>
+            > { loading ? "Đang tạo lại truyện..." : "🔁 Tạo lại truyện" }</button>
           </div>
-        ) }
+        </div>
+      ) }
     </>
   )
 }
