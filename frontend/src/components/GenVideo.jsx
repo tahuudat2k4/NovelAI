@@ -6,7 +6,7 @@ const GenVideo = ({story, setSelectedOption}) => {
      <div className="mr-20 text-white w-full min-h-153 border border-purple-500/20 rounded-md p-5 space-y-6">
       <div className='flex justify-between items-center border border-purple-500/20 p-5 px-13 rounded-md'>
         <div className='flex flex-row  items-center '>
-          <Clapperboard className="inline-block w-6 h-6 mr-2 text-blue-400" />
+          <Clapperboard className="inline-block w-6 h-6 mr-2 text-green-400" />
           <h2 className="text-2xl font-bold ">Generate Video</h2>
         </div>
 
