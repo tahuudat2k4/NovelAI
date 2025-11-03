@@ -18,7 +18,7 @@ export const createStory = async (storyData) => {
     throw error;
   }
 };
-// (Tuỳ chọn) Lưu truyện vào “storage”
+// Lưu truyện vào “storage”
 export const saveStory = async (storyData) => {
   try {
     const response = await api.post("/stories/save", storyData);
@@ -29,7 +29,7 @@ export const saveStory = async (storyData) => {
   }
 };
 
-// (Tuỳ chọn) Lấy danh sách truyện đã lưu
+// Lấy danh sách truyện đã lưu
 export const getSavedStories = async () => {
   try {
     const response = await api.get("/stories");
@@ -46,6 +46,26 @@ export const deleteStoryById = async (id) => {
     return response.data;
   } catch (error) {
     console.error("Lỗi khi xóa truyện:", error);
+    throw error;
+  }
+};
+// Lấy chi tiết truyện theo ID
+export const getStoryById = async (id) => {
+  try {
+    const response = await api.get(`/stories/${id}`);  
+    return response.data;
+  } catch (error) {
+    console.error("Lỗi khi lấy chi tiết truyện:", error);
+    throw error;
+  }
+};
+// Gửi dữ liệu lên server để gen ảnh minh hoạ
+export const createImage = async (imageData) => {
+  try {
+    const response = await api.post('/images', imageData); 
+    return response.data;
+  } catch (error) {
+    console.error('Error generating image:', error);
     throw error;
   }
 };
