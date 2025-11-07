@@ -3,6 +3,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/database');
 const storyRoutes = require('./routes/storyRoutes');
+const mediaRoutes = require('./routes/mediaRoutes');
 
 // Load environment variables
 dotenv.config();
@@ -20,6 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/v1/stories', storyRoutes);
+app.use('/api/v1/media', mediaRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {

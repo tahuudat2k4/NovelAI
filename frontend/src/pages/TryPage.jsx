@@ -11,6 +11,13 @@ const TryPage = () => {
   const [activeTab, setActiveTab] = useState('input');
   const [selectedOption, setSelectedOption] = useState(null);
   const [story, setStory] = useState("");
+   const [formData, setFormData] = useState({
+      genre: '',
+      length: '',
+      setting: '',
+      characters: '',
+      description: '',
+    });
   return (
     <div className="min-h-full bg-slate-950">
       <header className="fixed top-0 w-full bg-slate-900/50 border-b border-purple-500/20 shadow-lg z-50 backdrop-blur-sm">
@@ -106,10 +113,11 @@ const TryPage = () => {
             <>
               { !selectedOption ? (
                 <div className="text-white w-full min-h-screen">
-                  <InputForm setStory={ setStory } story={ story } setSelectedOption={ setSelectedOption } />
+                  <InputForm setStory={ setStory } story={ story } setSelectedOption={ setSelectedOption } formData={formData}
+    setFormData={setFormData} />
                 </div>
               ) : selectedOption === 'image' ? (
-                <GenImage story={ story } setSelectedOption={setSelectedOption} />
+                <GenImage setSelectedOption={setSelectedOption} story={ story } setting={formData.setting} characters = {formData.characters} />
               ) : selectedOption === 'audio' ? (
                 <GenAudio story={ story } setSelectedOption={setSelectedOption}/>
               ) : selectedOption === 'video' ? (

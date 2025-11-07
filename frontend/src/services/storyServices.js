@@ -59,13 +59,3 @@ export const getStoryById = async (id) => {
     throw error;
   }
 };
-// Gửi dữ liệu lên server để gen ảnh minh hoạ
-export const createImage = async (imageData) => {
-  try {
-    const response = await api.post('/images', imageData); 
-    return response.data;
-  } catch (error) {
-    console.error('Error generating image:', error);
-    throw error;
-  }
-};
