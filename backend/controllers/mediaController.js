@@ -7,7 +7,7 @@ const videoService = require('../services/videoGenerationService');
  */
 const generateImage = async (req, res, next) => {
   try {
-    const { prompt, numberOfImages = 1 } = req.body;
+    const { prompt} = req.body;
 
     if (!prompt) {
       return res.status(400).json({
@@ -18,7 +18,7 @@ const generateImage = async (req, res, next) => {
       });
     }
 
-    const images = await imageService.generateImage(prompt, numberOfImages);
+    const images = await imageService.generateImage(prompt);
 
     res.status(200).json({
       success: true,

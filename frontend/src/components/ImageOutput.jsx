@@ -22,8 +22,8 @@ const ImageOutput = ({image, isLoading}) => {
             <p className="text-gray-400">Creating your masterpiece...</p>
           </div>
         ) : image ? (
-          <div className="relative w-full h-full">
-            <image src={image || "../assets/placeholder.svg"} alt="Generated image" fill className="object-cover" priority />
+          <div className="relative w-full h-full flex items-center justify-center">
+            <img src={image || "../assets/placeholder.svg"} alt="Generated image" fill className="object-cover" priority />
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center gap-4 p-8">

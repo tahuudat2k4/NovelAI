@@ -24,7 +24,7 @@ const GenImage = ({ story, setSelectedOption, setting, characters }) => {
     : localSetting.trim().length > 0 && localCharacters.trim().length > 0;
   const finalPrompt =
     mode === "story"
-      ? `Tạo hình ảnh minh họa với: bối cảnh: ${localSetting}, nhân vật: ${localCharacters}, chi tiết thêm: ${customPrompt}`
+      ? `setting: ${localSetting}, characters: ${localCharacters}, more details: ${customPrompt}, ${story}`
       : customPrompt;
   // ---- 1️⃣ Sinh ảnh từ truyện ----
   const handleGenerateFromStory = async () => {
@@ -36,10 +36,15 @@ const GenImage = ({ story, setSelectedOption, setting, characters }) => {
     setIsLoading(true);
     try {
       const data = await generateImageFromStory(finalPrompt);
-      const imageUrl = Array.isArray(data.images)
-        ? data.images[0]
-        : data.image || data.url;
-      setGeneratedImage(imageUrl);
+      // Backend trả về [{ image_base64, contentType }]
+    if (data?.success && Array.isArray(data.images) && data.images.length > 0) {
+      const imgData = data.images[0];
+      const base64Url = `data:${imgData.contentType || 'image/jpeg'};base64,${imgData.image_base64}`;
+      setGeneratedImage(base64Url);
+    } else {
+      console.error("Invalid image data:", data);
+      alert("Không nhận được ảnh từ backend.");
+    }
     } catch (err) {
       console.error("Error generating image from story:", err);
       alert("Không thể tạo ảnh từ truyện.");
@@ -53,10 +58,19 @@ const GenImage = ({ story, setSelectedOption, setting, characters }) => {
     try {
 
       const data = await generateImage(finalPrompt);
-      const imageUrl = Array.isArray(data.images)
-        ? data.images[0]
-        : data.image || data.url;
-      setGeneratedImage(imageUrl);
+      // const imageUrl = Array.isArray(data.images)
+      //   ? data.images[0]
+      //   : data.image || data.url;
+      // setGeneratedImage(imageUrl);
+       // Backend trả về [{ image_base64, contentType }]
+     if (data?.success && Array.isArray(data.images) && data.images.length > 0) {
+      const imgData = data.images[0];
+      const base64Url = `data:${imgData.contentType || 'image/jpeg'};base64,${imgData.image_base64}`;
+      setGeneratedImage(base64Url);
+    } else {
+      console.error("Invalid image data:", data);
+      alert("Không nhận được ảnh từ backend.");
+    }
     } catch (error) {
       console.error('Error generating image:', error);
       alert("Không thể tạo ảnh từ lệnh của bạn.");
