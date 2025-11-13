@@ -7,11 +7,11 @@ import { ChevronDown } from 'lucide-react';
 
 const InputForm = ({ setSelectedOption, setStory, story, formData, setFormData }) => {
 
-  const GENRES = ["Kinh dị", "Lãng mạn", "Viễn tưởng", "Hài", "Trinh thám", "Cổ trang", "Khoa học viễn tưởng", "Kỳ ảo"];
+  const GENRES = ["Horror", "Romance", "Fiction", "Comedy", "Mystery", "Historical", "Science Fiction", "Fantasy"];
   const LENGTHS = [
-    { value: "500", label: "500 từ" },
-    { value: "700", label: "700 từ" },
-    { value: "1000", label: "1000 từ" },
+    { value: "500", label: "500 words" },
+    { value: "700", label: "700 words" },
+    { value: "1000", label: "1000 words" },
   ];
 
   const [loading, setLoading] = useState(false);
@@ -83,7 +83,7 @@ const InputForm = ({ setSelectedOption, setStory, story, formData, setFormData }
           <div className="flex flex-wrap gap-4 mb-4">
             {/* Thể loại */ }
             <div className="w-1/6">
-              <label className="block text-white mb-2" htmlFor="textInput">Thể loại</label>
+              <label className="block text-white mb-2" htmlFor="textInput">Genre</label>
               <select
                 id="genre"
                 name="genre"
@@ -92,7 +92,7 @@ const InputForm = ({ setSelectedOption, setStory, story, formData, setFormData }
                 onChange={ handleChange }
                 className="w-full px-3 py-2 bg-gray-700 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
               >
-                <option value="">Chọn thể loại</option>
+                <option value="">Choose genre</option>
                 { GENRES.map((genre, index) => (
                   <option key={ index } value={ genre }>{ genre }</option>
                 )) }
@@ -101,7 +101,7 @@ const InputForm = ({ setSelectedOption, setStory, story, formData, setFormData }
 
             {/* Độ dài */ }
             <div className="w-1/6">
-              <label className="block text-white mb-2" htmlFor="length">Độ dài</label>
+              <label className="block text-white mb-2" htmlFor="length">Length</label>
               <select
                 id="length"
                 name="length"
@@ -110,7 +110,7 @@ const InputForm = ({ setSelectedOption, setStory, story, formData, setFormData }
                 onChange={ handleChange }
                 className="w-full px-3 py-2 bg-gray-700 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
               >
-                <option value="">Chọn độ dài</option>
+                <option value="">Choose length</option>
                 { LENGTHS.map((option, index) => (
                   <option key={ index } value={ option.value }>{ option.label }</option>
                 )) }
@@ -119,7 +119,7 @@ const InputForm = ({ setSelectedOption, setStory, story, formData, setFormData }
 
             {/* Bối cảnh */ }
             <div className="flex-1">
-              <label className="block text-white mb-2" htmlFor="setting">Bối cảnh</label>
+              <label className="block text-white mb-2" htmlFor="setting">Setting</label>
               <input
                 type="text"
                 id="setting"
@@ -128,7 +128,7 @@ const InputForm = ({ setSelectedOption, setStory, story, formData, setFormData }
                 value={ formData.setting }
                 onChange={ handleChange }
                 className="w-full px-3 py-2 bg-gray-700 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-                placeholder="Ví dụ: Một thành phố cổ, một làng quê yên bình..."
+                placeholder="E.g: An ancient city, a peaceful village..."
               />
             </div>
           </div>
@@ -136,7 +136,7 @@ const InputForm = ({ setSelectedOption, setStory, story, formData, setFormData }
           <div className="flex gap-4 mb-4">
             {/* Nhân vật */ }
             <div className="flex-1">
-              <label className="block text-white mb-2" htmlFor="characters">Nhân vật</label>
+              <label className="block text-white mb-2" htmlFor="characters">Character</label>
               <input
                 type="text"
                 id="characters"
@@ -145,14 +145,14 @@ const InputForm = ({ setSelectedOption, setStory, story, formData, setFormData }
                 value={ formData.characters }
                 onChange={ handleChange }
                 className="w-full px-3 py-2 bg-gray-700 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-                placeholder="Ví dụ: Một anh chàng thợ rèn dũng cảm, một cô gái bí ẩn..."
+                placeholder="E.g: A brave blacksmith, a mysterious girl..."
               />
             </div>
           </div>
 
           {/* Mô tả */ }
           <div className="mb-4">
-            <label className="block text-white mb-2" htmlFor="description">Mô tả</label>
+            <label className="block text-white mb-2" htmlFor="description">Description</label>
             <textarea
               id="description"
               name="description"
@@ -161,7 +161,7 @@ const InputForm = ({ setSelectedOption, setStory, story, formData, setFormData }
               onChange={ handleChange }
               className="w-full px-3 py-2 bg-gray-700 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
               rows="4"
-              placeholder="Mô tả chi tiết về câu chuyện bạn muốn tạo..."
+              placeholder="Describe the story you want to create in detail..."
             ></textarea>
           </div>
 
@@ -183,41 +183,41 @@ const InputForm = ({ setSelectedOption, setStory, story, formData, setFormData }
       {/* Kết quả */ }
       { story && (
         <div className="m-7 p-10 bg-gray-900 text-white rounded-md whitespace-pre-line border border-green-500/20">
-          <h3 className="text-xl font-bold mb-2 text-purple-400">📖 Câu chuyện của bạn:</h3>
+          <h3 className="text-xl font-bold mb-2 text-purple-400">📖 Your story:</h3>
           <p>{ story }</p>
           <div className="flex mt-9">
             {/* Lưu truyện */ }
             <button type='submit' onClick={ handleSaveStory }
               className="flex cursor-pointer mr-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-md hover:from-purple-700 hover:to-pink-700 transition-colors duration-200"
-            >💾 Lưu truyện</button>
+            >💾 Save the story</button>
             {/* Mở rộng (tạo ảnh, tạo audio, tạo video) */ }
             <button
               onClick={ () => setOpen(!open) }
               className="cursor-pointer bg-gradient-to-r from-green-700 to-green-600 text-white px-4 py-2 rounded-lg 
       hover:from-green-800 hover:to-green-700 flex items-center gap-2 shadow-md mr-4"
             >
-              🌿 Mở rộng <ChevronDown className="w-4 h-4 pt-1" />
+              🌿 More options <ChevronDown className="w-4 h-4 pt-1" />
             </button>
 
             { open && (
-              <div className="absolute  left-92 mt-13 w-105  bg-slate-800 border border-slate-700 rounded-lg shadow-lg overflow-hidden flex flex-row">
+              <div className="absolute  left-97 mt-13 w-114  bg-slate-800 border border-slate-700 rounded-lg shadow-lg overflow-hidden flex flex-row">
                 <button onClick={ () => {
                   setSelectedOption("image");
                   setOpen(false);
                 } }
-                  className="w-35 px-5 py-2 hover:bg-slate-700 cursor-pointer text-base">🖼️ Tạo ảnh </button>
+                  className="w-38 px-5 py-2 hover:bg-slate-700 cursor-pointer text-base">🖼️ Gen image </button>
                 <button
                   onClick={ () => {
                     setSelectedOption("audio");
                     setOpen(false);
                   } }
-                  className="w-35 px-5 py-2 hover:bg-slate-700 cursor-pointer text-base">🎧 Tạo audio </button>
+                  className="w-38 px-5 py-2 hover:bg-slate-700 cursor-pointer text-base">🎧 Gen audio </button>
                 <button
                   onClick={ () => {
                     setSelectedOption("video");
                     setOpen(false);
                   } }
-                  className="w-35 px-5 py-2 hover:bg-slate-700 cursor-pointer text-base">🎬 Tạo video</button>
+                  className="w-38 px-5 py-2 hover:bg-slate-700 cursor-pointer text-base">🎬 Gen video</button>
               </div>
             ) }
             {/* Xuất PDF */ }
@@ -225,7 +225,7 @@ const InputForm = ({ setSelectedOption, setStory, story, formData, setFormData }
             <button type='submit'
               onClick={ handleRegenerate }
               className="cursor-pointer bg-gradient-to-r from-red-800 to-red-600 text-white px-4 py-2 rounded-md hover:from-red-900 hover:to-red-700 transition-colors duration-200"
-            > { loading ? "Đang tạo lại truyện..." : "🔁 Tạo lại truyện" }</button>
+            > { loading ? "Story is regenerating..." : "🔁 Regenerate story" }</button>
           </div>
         </div>
       ) }

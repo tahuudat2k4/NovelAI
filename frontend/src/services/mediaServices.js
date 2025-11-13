@@ -24,37 +24,11 @@ export const generateImageFromStory = async (storyContent) => {
     throw error.response?.data || error;
   }
 };
-
-/**
- * Generate audio narration from text
- * @param {string} text - Text to convert to speech
- * @param {string} language - Language code (default: 'vi-VN')
- * @returns {Promise} API response with audio data
- */
-export const generateAudio = async (text, language = 'vi-VN') => {
-  try {
-    const response = await axios.post(`${API_BASE_URL}/media/audio`, {
-      text,
-      language
-    });
-    return response.data;
-  } catch (error) {
-    console.error('Error generating audio:', error);
-    throw error.response?.data || error;
-  }
-};
-
-/**
- * Generate audio narration from story
- * @param {string} storyContent - Story text to narrate
- * @param {string} language - Language code
- * @returns {Promise} API response with audio data
- */
-export const generateAudioFromStory = async (storyContent, language = 'vi-VN') => {
+export const generateAudioFromStory = async (storyContent , voice) => {
   try {
     const response = await axios.post(`${API_BASE_URL}/media/audio/from-story`, {
-      storyContent,
-      language
+      storyContent, 
+      voice
     });
     return response.data;
   } catch (error) {
@@ -62,13 +36,6 @@ export const generateAudioFromStory = async (storyContent, language = 'vi-VN') =
     throw error.response?.data || error;
   }
 };
-
-/**
- * Generate video from text prompt
- * @param {string} prompt - Text description for video
- * @param {string} imageUrl - Optional base image URL
- * @returns {Promise} API response with video generation info
- */
 export const generateVideo = async (prompt, imageUrl = null) => {
   try {
     const response = await axios.post(`${API_BASE_URL}/media/video`, {
@@ -81,13 +48,6 @@ export const generateVideo = async (prompt, imageUrl = null) => {
     throw error.response?.data || error;
   }
 };
-
-/**
- * Generate video from story content
- * @param {string} storyContent - Story text to visualize
- * @param {string} imageUrl - Optional base image URL
- * @returns {Promise} API response with video generation info
- */
 export const generateVideoFromStory = async (storyContent, imageUrl = null) => {
   try {
     const response = await axios.post(`${API_BASE_URL}/media/video/from-story`, {
@@ -100,12 +60,6 @@ export const generateVideoFromStory = async (storyContent, imageUrl = null) => {
     throw error.response?.data || error;
   }
 };
-
-/**
- * Check video generation status
- * @param {string} videoId - Video generation ID
- * @returns {Promise} API response with video status
- */
 export const checkVideoStatus = async (videoId) => {
   try {
     const response = await axios.get(`${API_BASE_URL}/media/video/status/${videoId}`);
@@ -115,12 +69,6 @@ export const checkVideoStatus = async (videoId) => {
     throw error.response?.data || error;
   }
 };
-
-/**
- * Convert base64 audio to playable blob URL
- * @param {string} base64Audio - Base64 encoded audio
- * @returns {string} Blob URL for audio playback
- */
 export const createAudioBlobUrl = (base64Audio) => {
   try {
     const binaryString = atob(base64Audio);
@@ -139,7 +87,6 @@ export const createAudioBlobUrl = (base64Audio) => {
 export default {
   generateImage,
   generateImageFromStory,
-  generateAudio,
   generateAudioFromStory,
   generateVideo,
   generateVideoFromStory,

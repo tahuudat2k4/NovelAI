@@ -59,45 +59,12 @@ const generateImageFromStory = async (req, res, next) => {
     next(error);
   }
 };
-
-/**
- * Generate audio narration from text
- */
-const generateAudio = async (req, res, next) => {
-  try {
-    const { text, language = 'vi-VN' } = req.body;
-
-    if (!text) {
-      return res.status(400).json({
-        error: {
-          message: 'Text is required',
-          status: 400
-        }
-      });
-    }
-
-    const result = await audioService.generateAudioFromStory(text, language);
-
-    res.status(200).json({
-      success: true,
-      audio: result.audioData,
-      provider: result.provider,
-      format: result.format,
-      duration: result.duration,
-      characterCount: result.characterCount
-    });
-  } catch (error) {
-    console.error('Generate Audio Error:', error);
-    next(error);
-  }
-};
-
 /**
  * Generate audio from story content
  */
 const generateAudioFromStory = async (req, res, next) => {
   try {
-    const { storyContent, language = 'vi-VN' } = req.body;
+    const { storyContent , voice} = req.body;
 
     if (!storyContent) {
       return res.status(400).json({
@@ -108,11 +75,11 @@ const generateAudioFromStory = async (req, res, next) => {
       });
     }
 
-    const result = await audioService.generateAudioFromStory(storyContent, language);
+    const result = await audioService.generateAudioFromStory(storyContent, voice);
 
     res.status(200).json({
       success: true,
-      audio: result.audioData,
+      audioUrl: result.audioUrl,
       provider: result.provider,
       format: result.format,
       duration: result.duration,
@@ -124,7 +91,6 @@ const generateAudioFromStory = async (req, res, next) => {
     next(error);
   }
 };
-
 /**
  * Generate video from text prompt
  */
@@ -216,7 +182,6 @@ const checkVideoStatus = async (req, res, next) => {
 module.exports = {
   generateImage,
   generateImageFromStory,
-  generateAudio,
   generateAudioFromStory,
   generateVideo,
   generateVideoFromStory,

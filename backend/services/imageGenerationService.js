@@ -1,12 +1,9 @@
-const { GoogleGenAI } = require('@google/genai');
-
-// Initialize Gemini AI
-const genAI = new GoogleGenAI({
-  apiKey: process.env.GEMINI_API_KEY || "AIzaSyBEMUiCYmhc-zffIzzul9vzCwGyxVSJHyE",
-});
 
 const generateImage = async (prompt) => {
-  // try {
+  // try { if use Google Imagen API
+  //   const genAI = new GoogleGenAI({
+  //     apiKey: process.env.GOOGLE_GENAI_API_KEY,
+  //   });
   //   const response = await genAI.models.generateImages({
   //     model: 'imagen-4.0-generate-001', 
   //     prompt: prompt,

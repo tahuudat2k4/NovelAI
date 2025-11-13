@@ -43,11 +43,11 @@ const GenImage = ({ story, setSelectedOption, setting, characters }) => {
       setGeneratedImage(base64Url);
     } else {
       console.error("Invalid image data:", data);
-      alert("Không nhận được ảnh từ backend.");
+      alert("Can't get image from backend.");
     }
     } catch (err) {
       console.error("Error generating image from story:", err);
-      alert("Không thể tạo ảnh từ truyện.");
+      alert("Can't generate image from your story.");
     } finally {
       setIsLoading(false);
     }

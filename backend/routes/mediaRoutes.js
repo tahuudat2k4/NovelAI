@@ -7,7 +7,6 @@ router.post('/image', mediaController.generateImage);
 router.post('/image/from-story', mediaController.generateImageFromStory);
 
 // Audio generation routes
-router.post('/audio', mediaController.generateAudio);
 router.post('/audio/from-story', mediaController.generateAudioFromStory);
 
 // Video generation routes

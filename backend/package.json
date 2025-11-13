@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@elevenlabs/elevenlabs-js": "^2.23.0",
     "@google/genai": "^1.28.0",
     "axios": "^1.13.1",
     "cors": "^2.8.5",

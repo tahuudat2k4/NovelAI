@@ -41,8 +41,8 @@ const ImageOutput = ({image, isLoading}) => {
       {/* Info Panel */}
       {image && (
         <div className="flex gap-2 pt-2">
-            <button className="flex-1 bg-purple-600 hover:bg-purple-700 text-white text-sm py-2">Download</button>
-            <button className="flex-1 bg-slate-700 hover:bg-slate-600 text-white text-sm py-2">Save</button>
+            <button className="cursor-pointer flex-1 bg-purple-600 hover:bg-purple-700 text-white text-sm py-2">Download</button>
+            <button className="cursor-pointer flex-1 bg-slate-700 hover:bg-slate-600 text-white text-sm py-2">Regenarate</button>
           </div>
       )}
         </div>

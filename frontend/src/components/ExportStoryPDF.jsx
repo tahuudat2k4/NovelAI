@@ -14,16 +14,16 @@ export default function ExportStoryPDF({ story }) {
 
   const handleExport = () => {
     if (!story || story.trim() === "") {
-      alert("Chua co truyen de xuat ");
+      alert("Have no story to export!");
       return;
     }
 
     try {
       const button = document.querySelector('button');
-      const originalText = button?.innerHTML || "📜 Xuat truyen ra PDF";
+      const originalText = button?.innerHTML || "📜 Export story to PDF";
 
       if (button) {
-        button.innerHTML = "🔄 Dang tao PDF...";
+        button.innerHTML = "🔄 PDF is exporting";
         button.disabled = true;
       }
 
@@ -150,12 +150,12 @@ export default function ExportStoryPDF({ story }) {
       }
 
     } catch (error) {
-      console.error("Loi:", error);
-      alert("Loi xuat PDF!");
+      console.error("Error:", error);
+      alert("Fail to export PDF!");
 
       const button = document.querySelector('button');
       if (button) {
-        button.innerHTML = "📜 Xuat truyen ra PDF";
+        button.innerHTML = "📜 Export story in PDF";
         button.disabled = false;
       }
     }
@@ -169,7 +169,7 @@ export default function ExportStoryPDF({ story }) {
         onClick={ handleExport }
         className="cursor-pointer mr-4 bg-gradient-to-r from-yellow-800 to-yellow-600 text-white px-4 py-2 rounded-md hover:from-yellow-900 hover:to-yellow-700 transition-colors duration-200"
       >
-        📜 Xuất truyện ra PDF
+        📜 Export story in PDF
       </button>
     </>
   );
