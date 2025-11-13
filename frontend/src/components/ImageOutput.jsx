@@ -1,6 +1,14 @@
 import React from 'react'
 
 const ImageOutput = ({image, isLoading}) => {
+  const handleDownload = () => {
+    const link = document.createElement("a");
+    link.href = image; // image = URL hoặc data:image/png;base64,...
+    link.download = "story_image.png"; // tên file khi download
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
   return (
         <div className="h-full flex flex-col space-y-4 px-13">
             {/* Header */}
@@ -41,8 +49,8 @@ const ImageOutput = ({image, isLoading}) => {
       {/* Info Panel */}
       {image && (
         <div className="flex gap-2 pt-2">
-            <button className="cursor-pointer flex-1 bg-purple-600 hover:bg-purple-700 text-white text-sm py-2">Download</button>
-            <button className="cursor-pointer flex-1 bg-slate-700 hover:bg-slate-600 text-white text-sm py-2">Regenarate</button>
+            <button onClick={handleDownload} className="cursor-pointer flex-1 bg-purple-600 hover:bg-purple-700 text-white text-sm py-2">Download</button>
+            <button className="cursor-pointer flex-1 bg-slate-700 hover:bg-slate-600 text-white text-sm py-2">Regenerate</button>
           </div>
       )}
         </div>

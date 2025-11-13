@@ -36,11 +36,10 @@ export const generateAudioFromStory = async (storyContent , voice) => {
     throw error.response?.data || error;
   }
 };
-export const generateVideo = async (prompt, imageUrl = null) => {
+export const generateVideo = async (formData) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/media/video`, {
-      prompt,
-      imageUrl
+    const response = await axios.post(`${API_BASE_URL}/media/video`, formData, {
+       headers: { "Content-Type": "multipart/form-data" },
     });
     return response.data;
   } catch (error) {
