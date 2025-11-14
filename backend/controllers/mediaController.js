@@ -98,6 +98,7 @@ const generateVideoFromFormData = async (req, res, next) => {
   try {
      // multer sẽ lưu file trong req.files
     const { image, audio } = req.files;
+    const { subtitles } = req.body; // Lấy subtitle text từ body
 
     if (!image || !audio) {
       return res.status(400).json({
@@ -112,13 +113,16 @@ const generateVideoFromFormData = async (req, res, next) => {
     const result = await videoService.generateVideo({
       image: image[0], // multer trả về array
       audio: audio[0],
+      subtitles: subtitles || null // Truyền subtitle nếu có
     });
     // result.videoPath = đường dẫn file cục bộ trên server
     const videoFileName = path.basename(result.videoPath); // lấy tên file
     res.status(200).json({
       success: true,
       videoUrl: `http://localhost:8080/temp/${videoFileName}`, // trả về URL truy cập file
-      message: 'Video generation started. This may take a few minutes.'
+      message: subtitles 
+        ? 'Video with subtitles generation started. This may take a few minutes.'
+        : 'Video generation started. This may take a few minutes.'
     });
   } catch (error) {
     console.error('Generate Video from Story Error:', error);
