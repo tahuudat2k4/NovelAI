@@ -85,8 +85,12 @@ const generateVideo = async ({ image, audio, subtitles = null }) => {
 
       // Nếu có subtitle, thêm filter để burn subtitle vào video
       if (subtitles && srtPath) {
-        // Escape đường dẫn file cho Windows và Unix
-        const escapedSrtPath = srtPath.replace(/\\/g, '/').replace(/:/g, '\\:');
+        // Escape đường dẫn file cho ffmpeg subtitle filter
+        // Cần escape các ký tự đặc biệt: backslash, colon, và các ký tự khác
+        const escapedSrtPath = srtPath
+          .replace(/\\/g, '\\\\')  // Escape backslashes first
+          .replace(/:/g, '\\:')     // Escape colons
+          .replace(/'/g, "\\'");    // Escape single quotes
         
         ffmpegCommand.outputOptions([
           '-c:v libx264',
