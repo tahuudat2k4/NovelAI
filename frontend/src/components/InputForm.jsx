@@ -1,11 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createStory, saveStory } from '../services/storyServices';
 import ExportStoryPDF from './ExportStoryPDF';
 import { ChevronDown } from 'lucide-react';
 
-
-
 const InputForm = ({ setSelectedOption, setStory, story, formData, setFormData }) => {
+  // Nhận tham số từ URL để điền sẵn vào form để tiếp tục tạo truyện
+  useEffect(() => {
+  const params = new URLSearchParams(window.location.search);
+
+  const genre = params.get("genre") || "";
+  const length = params.get("length") || "";
+  const description = params.get("description") || "";
+
+  setFormData({
+    genre,
+    length,
+    setting: "",
+    characters: "",
+    description: description + "\n\nContinue this story based on the previous data.",
+  });
+}, []);
 
   const GENRES = ["Horror", "Romance", "Fiction", "Comedy", "Mystery", "Historical", "Science Fiction", "Fantasy"];
   const LENGTHS = [

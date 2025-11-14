@@ -9,7 +9,7 @@ const elevenlabs = new ElevenLabsClient({
 const generateAudioFromStory = async (storyText , voice) => {
   try {
      // Giới hạn text cho free tier
-    const maxLength = 1000;
+    const maxLength = 1500;
     const truncatedText =
       storyText.length > maxLength ? storyText.substring(0, maxLength) + "..." : storyText;
 
