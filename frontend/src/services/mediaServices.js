@@ -47,48 +47,11 @@ export const generateVideo = async (formData) => {
     throw error.response?.data || error;
   }
 };
-export const generateVideoFromStory = async (storyContent, imageUrl = null) => {
-  try {
-    const response = await axios.post(`${API_BASE_URL}/media/video/from-story`, {
-      storyContent,
-      imageUrl
-    });
-    return response.data;
-  } catch (error) {
-    console.error('Error generating video from story:', error);
-    throw error.response?.data || error;
-  }
-};
-export const checkVideoStatus = async (videoId) => {
-  try {
-    const response = await axios.get(`${API_BASE_URL}/media/video/status/${videoId}`);
-    return response.data;
-  } catch (error) {
-    console.error('Error checking video status:', error);
-    throw error.response?.data || error;
-  }
-};
-export const createAudioBlobUrl = (base64Audio) => {
-  try {
-    const binaryString = atob(base64Audio);
-    const bytes = new Uint8Array(binaryString.length);
-    for (let i = 0; i < binaryString.length; i++) {
-      bytes[i] = binaryString.charCodeAt(i);
-    }
-    const blob = new Blob([bytes], { type: 'audio/mp3' });
-    return URL.createObjectURL(blob);
-  } catch (error) {
-    console.error('Error creating audio blob:', error);
-    throw error;
-  }
-};
+
 
 export default {
   generateImage,
   generateImageFromStory,
   generateAudioFromStory,
   generateVideo,
-  generateVideoFromStory,
-  checkVideoStatus,
-  createAudioBlobUrl
 };
