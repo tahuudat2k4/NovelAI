@@ -5,6 +5,9 @@ Backend API for NovelAI story generation application using Express.js and Google
 ## Features
 
 - 📝 Generate AI-powered stories using Google Gemini AI
+- 🎨 Generate images from story content
+- 🎙️ Generate audio narration for stories
+- 🎥 Generate videos from images and audio with optional Vietnamese subtitles
 - 💾 Save and manage generated stories
 - 🔄 RESTful API endpoints
 - 🚀 Express.js server
@@ -14,6 +17,7 @@ Backend API for NovelAI story generation application using Express.js and Google
 
 - Node.js (v14 or higher)
 - Google Gemini API Key
+- FFmpeg (for video generation with subtitles)
 
 ## Installation
 
@@ -130,7 +134,38 @@ Delete a saved story by ID.
 }
 ```
 
-### 5. Health Check
+### 5. Generate Video with Subtitles
+**POST** `/api/media/video`
+
+Generate a video by combining an image and audio file. Optionally, add Vietnamese subtitles.
+
+**Request Format:** `multipart/form-data`
+
+**Fields:**
+- `image` (file, required): Image file (PNG, JPG, etc.)
+- `audio` (file, required): Audio file (MP3, WAV, etc.)
+- `subtitles` (text, optional): Subtitle text to burn into the video
+
+**Example using cURL:**
+```bash
+curl -X POST http://localhost:8080/api/media/video \
+  -F "image=@image.png" \
+  -F "audio=@audio.mp3" \
+  -F "subtitles=Xin chào, đây là phụ đề tiếng Việt"
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "videoUrl": "http://localhost:8080/temp/video_1234567890.mp4",
+  "message": "Video with subtitles generation started. This may take a few minutes."
+}
+```
+
+For detailed documentation on the subtitle feature, see [docs/VIDEO_SUBTITLES.md](docs/VIDEO_SUBTITLES.md)
+
+### 6. Health Check
 **GET** `/health`
 
 Check if the server is running.
@@ -149,12 +184,20 @@ Check if the server is running.
 backend/
 ├── server.js                 # Main server entry point
 ├── routes/
-│   └── storyRoutes.js       # API route definitions
+│   ├── storyRoutes.js       # Story API route definitions
+│   └── mediaRoutes.js       # Media API route definitions
 ├── controllers/
-│   └── storyController.js   # Request handlers
+│   ├── storyController.js   # Story request handlers
+│   └── mediaController.js   # Media request handlers
 ├── services/
 │   ├── geminiService.js     # Gemini AI integration
-│   └── storageService.js    # In-memory storage service
+│   ├── storageService.js    # In-memory storage service
+│   ├── imageGenerationService.js  # Image generation
+│   ├── audioGenerationService.js  # Audio generation
+│   └── videoGenerationService.js  # Video generation with subtitles
+├── docs/
+│   └── VIDEO_SUBTITLES.md   # Subtitle feature documentation
+├── temp/                     # Temporary files (auto-generated)
 ├── .env                      # Environment variables
 ├── package.json
 └── README.md
@@ -164,6 +207,9 @@ backend/
 
 - **Express.js** - Web framework
 - **Google Generative AI** - AI story generation
+- **FFmpeg** - Video processing and subtitle burning
+- **fluent-ffmpeg** - FFmpeg wrapper for Node.js
+- **multer** - File upload handling
 - **CORS** - Cross-origin resource sharing
 - **dotenv** - Environment variable management
 
