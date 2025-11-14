@@ -98,6 +98,7 @@ const generateVideoFromFormData = async (req, res, next) => {
   try {
      // multer sẽ lưu file trong req.files
     const { image, audio } = req.files;
+    const { text } = req.body; // Lấy text từ form data
 
     if (!image || !audio) {
       return res.status(400).json({
@@ -112,6 +113,7 @@ const generateVideoFromFormData = async (req, res, next) => {
     const result = await videoService.generateVideo({
       image: image[0], // multer trả về array
       audio: audio[0],
+      text: text || null // truyền text (subtitle) vào service
     });
     // result.videoPath = đường dẫn file cục bộ trên server
     const videoFileName = path.basename(result.videoPath); // lấy tên file
