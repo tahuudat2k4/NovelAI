@@ -89,7 +89,8 @@ const Storage = () => {
                 className="cursor-pointer px-4 py-2 bg-purple-600 rounded-lg hover:bg-purple-500"
                 onClick={ () =>
                   window.location.href =
-                  `/try?genre=${encodeURIComponent(selectedStory.genre)}` +
+                  `/try?isContinue=true` +
+                  `&genre=${encodeURIComponent(selectedStory.genre)}` +
                   `&length=${parseInt(selectedStory.length)}` +
                   `&description=${encodeURIComponent(selectedStory.content)}`
                 }

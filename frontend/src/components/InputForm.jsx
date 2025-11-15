@@ -11,13 +11,16 @@ const InputForm = ({ setSelectedOption, setStory, story, formData, setFormData }
   const genre = params.get("genre") || "";
   const length = params.get("length") || "";
   const description = params.get("description") || "";
+  const isContinue = params.get("isContinue") === "true";
 
   setFormData({
     genre,
     length,
     setting: "",
     characters: "",
-    description: description + "\n\nContinue this story based on the previous data.",
+    description: isContinue
+      ? description + "\n\nContinue this story based on the previous data."
+      : description,
   });
 }, []);
 
