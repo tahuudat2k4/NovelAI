@@ -1,7 +1,15 @@
 # 📚 NovelAI - AI-Powered Story Generation Platform
 
 NovelAI is a comprehensive full-stack web application that leverages artificial intelligence to generate creative stories, images, audio narration, and videos. The platform combines multiple AI services to provide users with a complete storytelling experience.
-
+# UI
+<img width="2849" height="1445" alt="image" src="https://github.com/user-attachments/assets/efbbfcc0-b385-4be8-b838-3575e428d32e" />
+<img width="2027" height="1026" alt="image" src="https://github.com/user-attachments/assets/0cbba507-b09e-4210-9fda-46b9b9f361df" />
+<img width="2027" height="1011" alt="image" src="https://github.com/user-attachments/assets/376de0b3-4474-4c6e-b515-6fa49be01535" />
+<img width="2012" height="1016" alt="image" src="https://github.com/user-attachments/assets/d7c8b01e-9a47-4e46-a56b-fbd247c37bf1" />
+<img width="2026" height="1016" alt="image" src="https://github.com/user-attachments/assets/678507b9-0dbc-4d4a-89ce-4676c415f119" />
+<img width="2020" height="1017" alt="image" src="https://github.com/user-attachments/assets/9c3e8432-2f49-40de-9c60-06485b99050f" />
+<img width="2026" height="1009" alt="image" src="https://github.com/user-attachments/assets/a506ad03-cb3b-4ed0-aea2-54e2286280d2" />
+<img width="2018" height="1013" alt="image" src="https://github.com/user-attachments/assets/e0a52e1a-be0a-4a18-a881-2faeeda7ca9c" />
 ## ✨ Key Features
 
 - **🤖 AI Story Generation**: Generate unique stories using Google Gemini AI with customizable parameters (genre, length, setting, characters)
