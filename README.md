@@ -1,0 +1,467 @@
+# 📚 NovelAI - AI-Powered Story Generation Platform
+
+NovelAI is a comprehensive full-stack web application that leverages artificial intelligence to generate creative stories, images, audio narration, and videos. The platform combines multiple AI services to provide users with a complete storytelling experience.
+
+## ✨ Key Features
+
+- **🤖 AI Story Generation**: Generate unique stories using Google Gemini AI with customizable parameters (genre, length, setting, characters)
+- **🎨 Image Generation**: Create stunning visual illustrations from story content using Pollinations AI
+- **🎙️ Audio Narration**: Convert stories to speech with multiple voice options using ElevenLabs API
+- **🎬 Video Creation**: Combine generated images and audio into videos with animated subtitles using FFmpeg
+- **💾 Story Management**: Save, retrieve, and delete generated stories with MongoDB storage
+- **📄 PDF Export**: Export stories to PDF format for offline reading
+- **📱 Responsive Design**: Modern, mobile-friendly UI built with React and TailwindCSS
+- **🌐 RESTful API**: Well-structured backend API for easy integration
+
+## 🛠️ Technology Stack
+
+### Frontend
+- **React 19.1.1** - Modern UI library
+- **Vite 7.1.7** - Fast build tool and dev server
+- **TailwindCSS 4.1.16** - Utility-first CSS framework
+- **Shadcn UI** - Reusable component library
+- **React Router DOM 7.9.4** - Client-side routing
+- **Axios** - HTTP client for API requests
+- **Lucide React** - Icon library
+- **jsPDF & html2canvas** - PDF generation
+
+### Backend
+- **Node.js** - JavaScript runtime
+- **Express.js 5.1.0** - Web framework
+- **MongoDB** - NoSQL database (via Mongoose)
+- **Google Gemini AI** - Story generation
+- **ElevenLabs API** - Text-to-speech conversion
+- **Pollinations AI** - Image generation
+- **FFmpeg** - Video processing and subtitle integration
+- **Multer** - File upload handling
+
+## 📋 Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- **Node.js** (v14 or higher) - [Download](https://nodejs.org/)
+- **npm** or **yarn** - Package manager
+- **MongoDB** - Database (local installation or MongoDB Atlas account)
+- **FFmpeg** - Video processing (automatically included via ffmpeg-static)
+
+### API Keys Required
+
+You will need to obtain API keys from the following services:
+
+1. **Google Gemini API Key** - [Get API Key](https://makersuite.google.com/app/apikey)
+2. **MongoDB URI** - [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+3. **ElevenLabs API Key** - [ElevenLabs](https://elevenlabs.io/)
+
+## 🚀 Installation & Setup
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/tahuudat2k4/NovelAI.git
+cd NovelAI
+```
+
+### 2. Backend Setup
+
+```bash
+# Navigate to backend directory
+cd backend
+
+# Install dependencies
+npm install
+
+# Create .env file
+# Copy the contents from .env.example or create new file
+touch .env
+```
+
+**Configure the `.env` file with your API keys:**
+
+```env
+GEMINI_API_KEY=your_gemini_api_key_here
+MONGODB_URI=your_mongodb_connection_string_here
+ELEVENLABS_API_KEY=your_elevenlabs_api_key_here
+PORT=8080
+```
+
+### 3. Frontend Setup
+
+```bash
+# Navigate to frontend directory (from root)
+cd ../frontend
+
+# Install dependencies
+npm install
+```
+
+## 🏃 Running the Application
+
+### Start Backend Server
+
+```bash
+# From backend directory
+cd backend
+npm start
+
+# For development with auto-reload
+npm run dev
+```
+
+The backend server will start on `http://localhost:8080`
+
+### Start Frontend Development Server
+
+```bash
+# From frontend directory
+cd frontend
+npm run dev
+```
+
+The frontend will start on `http://localhost:5173`
+
+### Access the Application
+
+Open your browser and navigate to:
+- **Frontend**: http://localhost:5173
+- **Backend API**: http://localhost:8080
+- **Health Check**: http://localhost:8080/health
+
+## 📁 Project Structure
+
+```
+NovelAI/
+├── backend/                      # Backend API server
+│   ├── config/                   # Configuration files
+│   │   └── database.js          # MongoDB connection setup
+│   ├── controllers/              # Request handlers
+│   │   ├── mediaController.js   # Media generation endpoints
+│   │   └── storyController.js   # Story CRUD operations
+│   ├── models/                   # Database models
+│   │   └── Story.js             # Story schema definition
+│   ├── routes/                   # API routes
+│   │   ├── mediaRoutes.js       # Media generation routes
+│   │   └── storyRoutes.js       # Story management routes
+│   ├── services/                 # Business logic layer
+│   │   ├── audioGenerationService.js  # ElevenLabs integration
+│   │   ├── geminiService.js           # Google Gemini AI integration
+│   │   ├── imageGenerationService.js  # Image generation logic
+│   │   ├── storageService.js          # In-memory storage service
+│   │   └── videoGenerationService.js  # FFmpeg video creation
+│   ├── temp/                     # Temporary files for video generation
+│   ├── .env                      # Environment variables
+│   ├── package.json              # Backend dependencies
+│   ├── server.js                 # Main server entry point
+│   └── README.md                 # Backend documentation
+│
+├── frontend/                     # React frontend application
+│   ├── public/                   # Static assets
+│   ├── src/
+│   │   ├── assets/              # Images, fonts, etc.
+│   │   ├── components/          # Reusable components
+│   │   │   ├── ui/             # Shadcn UI components
+│   │   │   ├── Content.jsx     # Landing page content
+│   │   │   ├── ExportStoryPDF.jsx  # PDF export functionality
+│   │   │   ├── Footer.jsx      # Footer component
+│   │   │   ├── GenAudio.jsx    # Audio generation UI
+│   │   │   ├── GenImage.jsx    # Image generation UI
+│   │   │   ├── GenVideo.jsx    # Video generation UI
+│   │   │   ├── Header.jsx      # Navigation header
+│   │   │   ├── ImageOutput.jsx # Image display component
+│   │   │   ├── InputForm.jsx   # Story input form
+│   │   │   └── Storage.jsx     # Saved stories management
+│   │   ├── lib/                 # Utility functions
+│   │   ├── pages/               # Page components
+│   │   │   ├── LandingPage.jsx # Home page
+│   │   │   └── TryPage.jsx     # Story generation page
+│   │   ├── services/            # API service layer
+│   │   │   ├── mediaServices.js # Media API calls
+│   │   │   └── storyServices.js # Story API calls
+│   │   ├── App.jsx              # Main app component
+│   │   ├── index.css            # Global styles
+│   │   └── main.jsx             # Application entry point
+│   ├── .gitignore
+│   ├── components.json          # Shadcn UI configuration
+│   ├── eslint.config.js         # ESLint configuration
+│   ├── index.html               # HTML template
+│   ├── jsconfig.json            # JavaScript configuration
+│   ├── package.json             # Frontend dependencies
+│   ├── vite.config.js           # Vite configuration
+│   └── README.md                # Frontend documentation
+│
+└── README.md                     # This file - Main project documentation
+```
+
+## 🔌 API Endpoints
+
+### Story Management
+
+#### Generate Story
+```http
+POST /api/v1/stories
+Content-Type: application/json
+
+{
+  "genre": "Fantasy",
+  "length": "700",
+  "setting": "An ancient forest",
+  "characters": "A brave young woman",
+  "description": "A journey to find hidden treasure"
+}
+```
+
+#### Save Story
+```http
+POST /api/v1/stories/save
+Content-Type: application/json
+
+{
+  "title": "Moonlight in the Deep Forest",
+  "genre": "Fantasy",
+  "length": "700 words",
+  "content": "Story content..."
+}
+```
+
+#### Get All Stories
+```http
+GET /api/v1/stories
+```
+
+#### Delete Story
+```http
+DELETE /api/v1/stories/:id
+```
+
+### Media Generation
+
+#### Generate Image from Prompt
+```http
+POST /api/v1/media/image
+Content-Type: application/json
+
+{
+  "prompt": "A mystical forest at night with moonlight"
+}
+```
+
+#### Generate Image from Story
+```http
+POST /api/v1/media/image/from-story
+Content-Type: application/json
+
+{
+  "storyContent": "Your complete story text..."
+}
+```
+
+#### Generate Audio from Story
+```http
+POST /api/v1/media/audio/from-story
+Content-Type: application/json
+
+{
+  "storyText": "Your story text...",
+  "voice": "pNInz6obpgDQGcFmaJgB"
+}
+```
+
+#### Generate Video
+```http
+POST /api/v1/media/video
+Content-Type: multipart/form-data
+
+image: [image file]
+audio: [audio file]
+text: "Subtitle text"
+```
+
+### Health Check
+```http
+GET /health
+```
+
+## 🔧 Configuration
+
+### Environment Variables
+
+#### Backend (.env)
+```env
+# Google Gemini AI API Key
+GEMINI_API_KEY=your_api_key_here
+
+# MongoDB Connection String
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/NovelAI
+
+# ElevenLabs API Key for Text-to-Speech
+ELEVENLABS_API_KEY=your_elevenlabs_key_here
+
+# Server Port
+PORT=8080
+```
+
+### Available Voice IDs (ElevenLabs)
+
+The application supports multiple voice options for audio generation. You can use different voice IDs in the audio generation request.
+
+## 🎯 Usage Guide
+
+### Creating a Story
+
+1. Navigate to the "Try" page
+2. Fill in the story parameters:
+   - **Genre**: Select or enter your preferred genre (Fantasy, Sci-Fi, Romance, etc.)
+   - **Length**: Specify word count (recommended: 500-1000 words)
+   - **Setting**: Describe the story's environment
+   - **Characters**: Describe main characters
+   - **Description**: Provide story plot or theme
+3. Click "Generate Story" and wait for AI to create your story
+
+### Generating Media
+
+1. **Generate Image**: After story generation, click "Generate Image" to create a visual representation
+2. **Generate Audio**: Click "Generate Audio" and select a voice to hear your story narrated
+3. **Create Video**: Use the "Generate Video" feature to combine image and audio with animated subtitles
+
+### Managing Stories
+
+- **Save Story**: Click the save button to store your story in the database
+- **View Saved Stories**: Access the storage section to view all saved stories
+- **Delete Story**: Remove unwanted stories from your collection
+- **Export to PDF**: Download any story as a PDF file
+
+## 🏗️ Building for Production
+
+### Frontend Build
+
+```bash
+cd frontend
+npm run build
+```
+
+The build output will be in the `frontend/dist` directory.
+
+### Backend Production
+
+For production deployment, consider:
+
+1. Use a process manager like PM2:
+```bash
+npm install -g pm2
+pm2 start backend/server.js --name novelai-backend
+```
+
+2. Set up a reverse proxy (Nginx/Apache)
+3. Use HTTPS with SSL certificates
+4. Configure proper CORS settings
+5. Set up environment-specific configurations
+6. Implement rate limiting and security best practices
+
+## 🧪 Testing
+
+### Backend
+```bash
+cd backend
+npm test
+```
+
+### Frontend
+```bash
+cd frontend
+npm run lint
+```
+
+## 📝 Development Guidelines
+
+### Code Style
+- Follow ESLint rules for JavaScript/React
+- Use meaningful variable and function names
+- Comment complex logic
+- Keep components small and focused
+
+### Git Workflow
+1. Create a feature branch from `main`
+2. Make your changes
+3. Test thoroughly
+4. Submit a pull request
+
+## 🤝 Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository
+2. Create a new branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Commit your changes (`git commit -m 'Add some amazing feature'`)
+5. Push to the branch (`git push origin feature/amazing-feature`)
+6. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the ISC License - see the LICENSE file for details.
+
+## 👥 Authors
+
+- **tahuudat2k4** - Initial work and maintenance
+
+## 🙏 Acknowledgments
+
+- Google Gemini AI for story generation capabilities
+- ElevenLabs for high-quality text-to-speech
+- Pollinations AI for image generation
+- FFmpeg for video processing
+- All open-source libraries and contributors
+
+## 📞 Support
+
+For issues, questions, or suggestions:
+- Create an issue on GitHub
+- Contact the maintainer
+
+## 🔐 Security Notes
+
+- Never commit API keys or sensitive credentials to version control
+- Use environment variables for all sensitive configuration
+- Keep your dependencies up to date
+- Follow security best practices for production deployment
+- The `.env` file should be added to `.gitignore`
+
+## 📊 System Requirements
+
+### Minimum Requirements
+- 2GB RAM
+- 1GB free disk space
+- Modern web browser (Chrome, Firefox, Safari, Edge)
+- Stable internet connection for API calls
+
+### Recommended Requirements
+- 4GB+ RAM
+- 5GB+ free disk space (for video generation)
+- Fast internet connection
+- Latest browser version
+
+## 🚀 Future Enhancements
+
+- [ ] User authentication and authorization
+- [ ] Multiple language support
+- [ ] Advanced story editing tools
+- [ ] Story collaboration features
+- [ ] Social sharing capabilities
+- [ ] Mobile application (React Native)
+- [ ] More AI model options
+- [ ] Custom voice training
+- [ ] Advanced video editing features
+- [ ] Story analytics and insights
+
+## 📚 Additional Resources
+
+- [Google Gemini AI Documentation](https://ai.google.dev/docs)
+- [ElevenLabs API Documentation](https://elevenlabs.io/docs)
+- [React Documentation](https://react.dev)
+- [Express.js Documentation](https://expressjs.com)
+- [MongoDB Documentation](https://docs.mongodb.com)
+
+---
+
+**Made with ❤️ by tahuudat2k4**
+
+*Happy Story Creating! 📖✨*
