@@ -84,7 +84,7 @@ const NovelView = ({ novel: initialNovel, onBack }) => {
         </div>
         <button
           onClick={onBack}
-          className="px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-600 transition-colors"
+          className="px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-600 transition-colors cursor-pointer"
         >
           ← Back
         </button>
@@ -232,7 +232,7 @@ const NovelView = ({ novel: initialNovel, onBack }) => {
                   <button
                     key={idx}
                     onClick={() => setSelectedDirection(suggestion.direction)}
-                    className={`p-4 rounded-lg border-2 transition-all text-left ${
+                    className={`cursor-pointer p-4 rounded-lg border-2 transition-all text-left ${
                       selectedDirection === suggestion.direction
                         ? 'border-purple-500 bg-purple-500/20'
                         : 'border-gray-600 hover:border-purple-400/50 bg-gray-800/50'
