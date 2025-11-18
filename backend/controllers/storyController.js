@@ -5,7 +5,7 @@ const storageService = require('../services/storageService');
 const generateStory = async (req, res, next) => {
   try {
     const { genre, length, setting, characters, description } = req.body;
-
+    
     // Validate required fields
     if (!genre || !length || !description) {
       return res.status(400).json({

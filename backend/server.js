@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const connectDB = require('./config/database');
 const storyRoutes = require('./routes/storyRoutes');
 const mediaRoutes = require('./routes/mediaRoutes');
+const novelRoutes = require('./routes/novelRoutes');
 const path = require('path');
 
 // Load environment variables
@@ -26,6 +27,7 @@ app.use('/temp', express.static(path.join(__dirname, 'temp')));
 // Routes
 app.use('/api/v1/stories', storyRoutes);
 app.use('/api/v1/media', mediaRoutes);
+app.use('/api/v1/novels', novelRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
