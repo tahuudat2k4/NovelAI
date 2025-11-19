@@ -1,6 +1,6 @@
 # 📚 NovelAI - AI-Powered Story Generation Platform
 
-NovelAI is a comprehensive full-stack web application that leverages artificial intelligence to generate creative stories, images, audio narration, and videos. The platform combines multiple AI services to provide users with a complete storytelling experience.
+NovelAI is a comprehensive full-stack web application that leverages artificial intelligence to generate creative stories, multi-chapter novels, images, audio narration, and videos. The platform combines multiple AI services to provide users with a complete storytelling experience, from quick single stories to elaborate novels with blueprint-based narrative control.
 # UI
 <img width="2849" height="1445" alt="image" src="https://github.com/user-attachments/assets/efbbfcc0-b385-4be8-b838-3575e428d32e" />
 <img width="2027" height="1026" alt="image" src="https://github.com/user-attachments/assets/0cbba507-b09e-4210-9fda-46b9b9f361df" />
