@@ -2,7 +2,9 @@
 
 NovelAI is a comprehensive full-stack web application that leverages artificial intelligence to generate creative stories, multi-chapter novels, images, audio narration, and videos. The platform combines multiple AI services to provide users with a complete storytelling experience, from quick single stories to elaborate novels with blueprint-based narrative control.
 # UI
-<img width="2849" height="1445" alt="image" src="https://github.com/user-attachments/assets/efbbfcc0-b385-4be8-b838-3575e428d32e" />
+<img width="2851" height="1447" alt="image" src="https://github.com/user-attachments/assets/967f5418-dcaf-4f21-8aab-540713d77d61" />
+<img width="2846" height="1444" alt="image" src="https://github.com/user-attachments/assets/d46522c4-dfd6-4ec8-ba0f-3ff6f2d635cd" />
+<img width="2844" height="1443" alt="image" src="https://github.com/user-attachments/assets/2d145500-e06b-4dce-9a2d-7be5bee04e44" />
 <img width="2027" height="1026" alt="image" src="https://github.com/user-attachments/assets/0cbba507-b09e-4210-9fda-46b9b9f361df" />
 <img width="2027" height="1011" alt="image" src="https://github.com/user-attachments/assets/376de0b3-4474-4c6e-b515-6fa49be01535" />
 <img width="2012" height="1016" alt="image" src="https://github.com/user-attachments/assets/d7c8b01e-9a47-4e46-a56b-fbd247c37bf1" />
