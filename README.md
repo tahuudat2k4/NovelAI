@@ -13,10 +13,11 @@ NovelAI is a comprehensive full-stack web application that leverages artificial 
 ## ✨ Key Features
 
 - **🤖 AI Story Generation**: Generate unique stories using Google Gemini AI with customizable parameters (genre, length, setting, characters)
+- **📚 Novel Generation**: Create complete multi-chapter novels with AI-powered blueprint system, chapter-by-chapter generation, and interactive story direction choices
 - **🎨 Image Generation**: Create stunning visual illustrations from story content using Pollinations AI
 - **🎙️ Audio Narration**: Convert stories to speech with multiple voice options using ElevenLabs API
 - **🎬 Video Creation**: Combine generated images and audio into videos with animated subtitles using FFmpeg
-- **💾 Story Management**: Save, retrieve, and delete generated stories with MongoDB storage
+- **💾 Story & Novel Management**: Save, retrieve, and delete generated stories and novels with MongoDB storage
 - **📄 PDF Export**: Export stories to PDF format for offline reading
 - **📱 Responsive Design**: Modern, mobile-friendly UI built with React and TailwindCSS
 - **🌐 RESTful API**: Well-structured backend API for easy integration
@@ -29,19 +30,20 @@ NovelAI is a comprehensive full-stack web application that leverages artificial 
 - **TailwindCSS 4.1.16** - Utility-first CSS framework
 - **Shadcn UI** - Reusable component library
 - **React Router DOM 7.9.4** - Client-side routing
-- **Axios** - HTTP client for API requests
-- **Lucide React** - Icon library
-- **jsPDF & html2canvas** - PDF generation
+- **Axios 1.13.1** - HTTP client for API requests
+- **Lucide React 0.548.0** - Icon library
+- **jsPDF 3.0.3 & html2canvas 1.4.1** - PDF generation
 
 ### Backend
 - **Node.js** - JavaScript runtime
 - **Express.js 5.1.0** - Web framework
-- **MongoDB** - NoSQL database (via Mongoose)
-- **Google Gemini AI** - Story generation
-- **ElevenLabs API** - Text-to-speech conversion
+- **MongoDB (Mongoose 8.19.2)** - NoSQL database
+- **Google GenAI 1.28.0** - AI story and novel generation using Gemini 2.0 Flash model
+- **ElevenLabs 2.23.0** - Text-to-speech conversion
 - **Pollinations AI** - Image generation
-- **FFmpeg** - Video processing and subtitle integration
-- **Multer** - File upload handling
+- **FFmpeg (fluent-ffmpeg 2.1.3 & ffmpeg-static 5.2.0)** - Video processing and subtitle integration
+- **Multer 2.0.2** - File upload handling
+- **Axios 1.13.1** - HTTP client for external API calls
 
 ## 📋 Prerequisites
 
@@ -131,6 +133,9 @@ The frontend will start on `http://localhost:5173`
 
 Open your browser and navigate to:
 - **Frontend**: http://localhost:5173
+  - Home page: http://localhost:5173/
+  - Story generation: http://localhost:5173/try
+  - Novel generation: http://localhost:5173/novel
 - **Backend API**: http://localhost:8080
 - **Health Check**: http://localhost:8080/health
 
@@ -143,20 +148,24 @@ NovelAI/
 │   │   └── database.js          # MongoDB connection setup
 │   ├── controllers/              # Request handlers
 │   │   ├── mediaController.js   # Media generation endpoints
+│   │   ├── novelController.js   # Novel CRUD and chapter generation
 │   │   └── storyController.js   # Story CRUD operations
 │   ├── models/                   # Database models
+│   │   ├── Novel.js             # Novel schema with chapters and blueprint
 │   │   └── Story.js             # Story schema definition
 │   ├── routes/                   # API routes
 │   │   ├── mediaRoutes.js       # Media generation routes
+│   │   ├── novelRoutes.js       # Novel management routes
 │   │   └── storyRoutes.js       # Story management routes
 │   ├── services/                 # Business logic layer
 │   │   ├── audioGenerationService.js  # ElevenLabs integration
-│   │   ├── geminiService.js           # Google Gemini AI integration
+│   │   ├── geminiService.js           # Google Gemini AI integration for stories
 │   │   ├── imageGenerationService.js  # Image generation logic
+│   │   ├── novelService.js            # Novel blueprint and chapter generation
 │   │   ├── storageService.js          # In-memory storage service
 │   │   └── videoGenerationService.js  # FFmpeg video creation
-│   ├── temp/                     # Temporary files for video generation
-│   ├── .env                      # Environment variables
+│   ├── .env.example              # Environment variables template
+│   ├── .gitignore                # Git ignore rules
 │   ├── package.json              # Backend dependencies
 │   ├── server.js                 # Main server entry point
 │   └── README.md                 # Backend documentation
@@ -176,15 +185,20 @@ NovelAI/
 │   │   │   ├── Header.jsx      # Navigation header
 │   │   │   ├── ImageOutput.jsx # Image display component
 │   │   │   ├── InputForm.jsx   # Story input form
+│   │   │   ├── NovelInputForm.jsx  # Novel creation form
+│   │   │   ├── NovelList.jsx   # List of saved novels
+│   │   │   ├── NovelView.jsx   # Novel reading and chapter navigation
 │   │   │   └── Storage.jsx     # Saved stories management
 │   │   ├── lib/                 # Utility functions
 │   │   ├── pages/               # Page components
 │   │   │   ├── LandingPage.jsx # Home page
+│   │   │   ├── NovelPage.jsx   # Novel generation and reading page
 │   │   │   └── TryPage.jsx     # Story generation page
 │   │   ├── services/            # API service layer
 │   │   │   ├── mediaServices.js # Media API calls
+│   │   │   ├── novelServices.js # Novel API calls
 │   │   │   └── storyServices.js # Story API calls
-│   │   ├── App.jsx              # Main app component
+│   │   ├── App.jsx              # Main app component with routing
 │   │   ├── index.css            # Global styles
 │   │   └── main.jsx             # Application entry point
 │   ├── .gitignore
@@ -238,6 +252,54 @@ GET /api/v1/stories
 #### Delete Story
 ```http
 DELETE /api/v1/stories/:id
+```
+
+### Novel Management
+
+#### Create Novel with Blueprint
+```http
+POST /api/v1/novels
+Content-Type: application/json
+
+{
+  "title": "The Enchanted Chronicles",
+  "genre": "Fantasy",
+  "totalChapters": 10,
+  "wordsPerChapter": 1000,
+  "setting": "A magical realm with ancient forests and mystical creatures",
+  "characters": "A young wizard named Elara and her companion, a talking fox",
+  "description": "A quest to restore balance to the magical realm"
+}
+```
+
+#### Generate Next Chapter
+```http
+POST /api/v1/novels/:id/chapters
+Content-Type: application/json
+
+{
+  "selectedDirection": "action"  // Optional: "action", "drama", "psychological", or "mystery"
+}
+```
+
+#### Get Novel by ID
+```http
+GET /api/v1/novels/:id
+```
+
+#### Get All Novels
+```http
+GET /api/v1/novels
+```
+
+#### Delete Novel
+```http
+DELETE /api/v1/novels/:id
+```
+
+#### Get Chapter Suggestions
+```http
+GET /api/v1/novels/:id/suggestions
 ```
 
 ### Media Generation
@@ -313,7 +375,7 @@ The application supports multiple voice options for audio generation. You can us
 
 ## 🎯 Usage Guide
 
-### Creating a Story
+### Creating a Single Story
 
 1. Navigate to the "Try" page
 2. Fill in the story parameters:
@@ -324,18 +386,43 @@ The application supports multiple voice options for audio generation. You can us
    - **Description**: Provide story plot or theme
 3. Click "Generate Story" and wait for AI to create your story
 
+### Creating a Multi-Chapter Novel
+
+1. Navigate to the "Novel" page
+2. Fill in the novel parameters:
+   - **Title**: Your novel's title
+   - **Genre**: Choose the genre for your novel
+   - **Total Chapters**: Number of chapters (e.g., 10, 20)
+   - **Words per Chapter**: Approximate length of each chapter (recommended: 800-2000 words)
+   - **Setting**: Describe the world and environment
+   - **Characters**: Describe main characters and their roles
+   - **Description**: Provide overall plot and themes
+3. Click "Generate Blueprint" to create the story structure
+4. Review the blueprint showing:
+   - World building and rules
+   - Character profiles
+   - Story arc (3-act structure)
+   - Chapter outlines
+5. Generate chapters one by one:
+   - Click "Generate Next Chapter" to create each chapter
+   - Review AI-suggested directions for the story (action, drama, psychological, mystery)
+   - Select a direction to influence the next chapter's tone
+   - Read generated chapters and continue the story
+6. Save your novel to view and read later
+
 ### Generating Media
 
 1. **Generate Image**: After story generation, click "Generate Image" to create a visual representation
 2. **Generate Audio**: Click "Generate Audio" and select a voice to hear your story narrated
 3. **Create Video**: Use the "Generate Video" feature to combine image and audio with animated subtitles
 
-### Managing Stories
+### Managing Stories and Novels
 
-- **Save Story**: Click the save button to store your story in the database
-- **View Saved Stories**: Access the storage section to view all saved stories
-- **Delete Story**: Remove unwanted stories from your collection
+- **Save Story/Novel**: Click the save button to store your content in the database
+- **View Saved Content**: Access the storage section to view all saved stories and novels
+- **Delete Content**: Remove unwanted stories or novels from your collection
 - **Export to PDF**: Download any story as a PDF file
+- **Chapter Navigation**: In novels, navigate between chapters using the chapter selector
 
 ## 🏗️ Building for Production
 
@@ -449,16 +536,20 @@ For issues, questions, or suggestions:
 
 ## 🚀 Future Enhancements
 
+- [x] Multi-chapter novel generation with blueprint system
+- [x] Interactive story direction selection
+- [x] Chapter-by-chapter narrative control
 - [ ] User authentication and authorization
 - [ ] Multiple language support
 - [ ] Advanced story editing tools
 - [ ] Story collaboration features
 - [ ] Social sharing capabilities
 - [ ] Mobile application (React Native)
-- [ ] More AI model options
+- [ ] More AI model options (GPT-4, Claude, etc.)
 - [ ] Custom voice training
 - [ ] Advanced video editing features
 - [ ] Story analytics and insights
+- [ ] Export novels as ePub/MOBI formats
 
 ## 📚 Additional Resources
 
