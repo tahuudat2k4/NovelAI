@@ -1,7 +1,16 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Content = () => {
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
+  const handleGetStartClick = () =>{
+    setShowModal(true);
+  }
+  const handleOptionSelect = (path) =>{
+    setShowModal(false);
+    navigate(path);
+  }
   return (
     <main className="pt-24 bg-gradient-to-b from-purple-950 to-slate-950">
       {/* Hero Section */}
@@ -12,10 +21,66 @@ const Content = () => {
         <p className="text-gray-300 text-lg md:text-xl max-w-3xl mx-auto mb-8">
           A comprehensive AI creative platform that helps you create unique content. From short stories and novels to images and videos, all with just a few clicks.
         </p>
-        <Link to="/try" className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-3 rounded-lg font-medium hover:from-purple-700 hover:to-pink-700 transition-all duration-200">
-          Get Started →
-        </Link>
+       <button 
+          onClick={handleGetStartClick}
+          className="cursor-pointer bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-3 rounded-lg font-medium hover:from-purple-700 hover:to-pink-700 transition-all duration-200"
+        >
+          Get Start →
+        </button>
       </section>
+       {/* Modal */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 px-4">
+          <div className="bg-slate-900 rounded-2xl p-8 max-w-md w-full border border-purple-500/30 relative">
+            <button 
+              onClick={() => setShowModal(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            
+            <h2 className="text-2xl font-bold text-white mb-6 text-center">Choose Your Creation</h2>
+            
+            <div className="space-y-4">
+              <button
+                onClick={() => handleOptionSelect('/novel')}
+                className="cursor-pointer w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white p-6 rounded-xl hover:from-green-700 hover:to-emerald-700 transition-all duration-200 text-left group"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="bg-white/20 w-12 h-12 rounded-lg flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold mb-1">Create Novel</h3>
+                    <p className="text-sm text-white/80">Multi-chapter novels with coherent storylines</p>
+                  </div>
+                </div>
+              </button>
+
+              <button
+                onClick={() => handleOptionSelect('/try')}
+                className="cursor-pointer w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white p-6 rounded-xl hover:from-purple-700 hover:to-pink-700 transition-all duration-200 text-left group"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="bg-white/20 w-12 h-12 rounded-lg flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold mb-1">Create Short Story</h3>
+                    <p className="text-sm text-white/80">Quick and unique short stories</p>
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Features Grid */}
       <section id='about' className="px-4 py-16">

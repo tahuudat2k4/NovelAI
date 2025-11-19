@@ -121,14 +121,14 @@ const NovelList = ({ onViewNovel }) => {
             <div className="flex gap-2">
               <button
                 onClick={() => handleView(novel._id)}
-                className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-md transition-colors text-sm"
+                className="cursor-pointer flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-md transition-colors text-sm"
               >
                 <Eye className="w-4 h-4" />
                 {novel.isCompleted ? 'Read' : 'Continue'}
               </button>
               <button
                 onClick={() => handleDelete(novel._id)}
-                className="px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md transition-colors"
+                className="cursor-pointer px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md transition-colors"
                 title="Delete novel"
               >
                 <Trash2 className="w-4 h-4" />
